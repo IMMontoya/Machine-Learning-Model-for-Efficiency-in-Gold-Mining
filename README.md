@@ -179,6 +179,6 @@ The best model with the best parameters performs only marginally better (sMAPE =
 
 In this project, we developed a machine learning model to predict the amount of gold recovered from gold ore, aiming to optimize the production process for Zyfra. The process involved extensive data preprocessing and the evaluation of multiple models (Linear Regression, Decision Tree Regressor, Random Forest Regressor, and a baseline Dummy Regressor). The best model was a Random Forrest Regressor with a max depth of 26 and 200 estimators. This model achieved only marginal improvement over the baseline, highlighting areas for further enhancement.
 
-### Recommendation:
+### Recommendation
 
 Based on the model’s performance, I recommend exploring more computationally expensive hyperparameters and other advanced machine learning models to capture complex relationships in the data. Additionally, incorporating domain-specific features and conducting detailed exploratory data analysis will further improve model accuracy and efficiency.
