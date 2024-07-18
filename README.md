@@ -159,7 +159,7 @@ The Linear Regressor achieves a SMAPE Of 9.315
 
 The Decision Tree Regressor is tested on a range of `max_depth = [None] + list(range(1, 21))` and achieves sMAPE: 8.1695 with max depth of 16
 
-The Random Forrest Regressor is teston on a range of `max_depth = range(16, 27, 2)` and a range of `estimators = [100, 200]`. Random Forest Final sMAPE: 6.7610 with max depth of 26 and 200 estimators
+The Random Forrest Regressor is teston on a range of `max_depth = range(16, 27, 2)` and a range of `estimators = [100, 200]`. Random Forest Final SMAPE: 6.7610 with max depth of 26 and 200 estimators
 
 ### Test the Best Model
 
