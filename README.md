@@ -1,5 +1,17 @@
 # Machine Learning Model for Efficiency in Gold Mining
 
+## Table of Contents
+
+- [Notebook](zyfra_ml_gold_mining.ipynb)
+- [Project Overview](#project-overview)
+- [Data Preprocessing](#data-preprocessing)
+- [Analyze the Data](#analyze-the-data)
+- [Symmetric Mean Absolute Percentage Error Functions](#symmetric-mean-absolute-percentage-error-functions)
+- [Develop and Evaluate Models](#develop-and-evaluate-models)
+- [Test the Best Model](#test-the-best-model)
+- [Conclusion](#conclusion)
+- [Libraries Used](#libraries-used)
+
 ## Project Overview
 
 ### Introduction
@@ -105,7 +117,7 @@ After preprocessing the data, the share of train data to test data is within 2% 
 
 ![PB Concentration per Stage](/images/pb_conc.png)
 
-#### Findings
+**Findings**  
 
 - Gold (AU): As the refining process progress, the concentration of gold increases steadily. This is to be expected, as gold is the product in this process.
 - Silver (AG): Silver concentration moves in the opposite direction of gold concentration, decreasing at every step of the process.
@@ -117,21 +129,19 @@ After preprocessing the data, the share of train data to test data is within 2% 
 
 ![primary.input.feed_size Distribution](/images/primary_input_feed_dist.png)
 
-#### Findings
-
-Upon visual inspection of both particle feed size columns (`primary_cleaner.input.feed_size` and `rougher.input.feed_size`), it can be determined that the distributions between the train and test set do not differ significantly. This is most clearly illustrated by plotting the empirical cumulative distribution. Additional steps to balance these features is not necessary. 
+**Findings**  
+Upon visual inspection of both particle feed size columns (`primary_cleaner.input.feed_size` and `rougher.input.feed_size`), it can be determined that the distributions between the train and test set do not differ significantly. This is most clearly illustrated by plotting the empirical cumulative distribution. Additional steps to balance these features is not necessary.
 
 ### Explore the total substance concentration at each stage
 
 ![Total Substance Concentration Distribution](/images/total_conc_per_stage.png)
 
-#### Findings
-
+**Findings**  
 As the process progresses, the total concentration of all substances measured increases and condenses toward the mean value. This is to be expected, and generally reflects the pattern of the target substance (gold).
 
-### Symetric Mean Absolute Percentage Error Functions
+## Symmetric Mean Absolute Percentage Error Functions
 
-#### Define function to calculate the sMAPE value
+### Define function to calculate the sMAPE value
 
 Similar to MAE, but is expressed in relative values instead of absolute ones. It equally takes into account the scale of both the target and the prediction.
 
@@ -145,13 +155,13 @@ where:
 - $prediction_𝑖$ is the predicted value for the i-th observation
 - $𝑁$ is the total number of observations
 
-#### Define function to calculate the final sMAPE value
+### Define function to calculate the final sMAPE value
 
 The final function places 75% weight on the `final.output.recovery` target as is represented as:
 
 $ Final\ sMAPE = 25\% * sMAPE(rougher) + 75\% * sMAPE(final) $
 
-### Develop and Evaluate Models
+## Develop and Evaluate Models
 
 Three models are trained, cross validated, and evaluated according to their final sMAPE scores.  
 
@@ -161,7 +171,7 @@ The Decision Tree Regressor is tested on a range of `max_depth = [None] + list(r
 
 The Random Forrest Regressor is teston on a range of `max_depth = range(16, 27, 2)` and a range of `estimators = [100, 200]`. Random Forest Final SMAPE: 6.7610 with max depth of 26 and 200 estimators
 
-### Test the Best Model
+## Test the Best Model
 
 The best model was determined to be the Random Forest with max depth of 26 and 200 estimators. The model is then retrained on the entire training set and evaluated on its predictions for the test set. The final sMAPE score on the test set was 10.0919. However, a dummy regressor was also developed using the strategy of always predicting the mean values for the targets and scored similarly with a sMAPE of 10.2896.
 
@@ -171,8 +181,7 @@ The model predictions and mean predictions are plotted for each target value.
 
 ![Final Predictions](/images/final_preds.png)
 
-#### Findings
-
+**Findings**  
 The best model with the best parameters performs only marginally better (sMAPE = 10.0919) compared to a baseline regression model predicting the mean values for each target (sMAPE = 10.2896). Plotting the model predictions and the dummy predictions illuminates this further. The model does a significantly better job of predicting the rougher.output.recovery target than the using the mean value prediction, we can see a more general adherence to the line of perfect prediction. However, when it comes to predicting the final.output.recovery target, the model's predictions cluster around the mean value much more so than the line of perfect prediction. Considering the final sMAPE calculation heavily favors the sMAPE score for the final.output.recovery target, this is explains the near match in final sMAPE scores between the best model and dummy model predictions.
 
 ## Conclusion
@@ -182,3 +191,13 @@ In this project, we developed a machine learning model to predict the amount of 
 ### Recommendation
 
 Based on the model’s performance, I recommend exploring more computationally expensive hyperparameters and other advanced machine learning models to capture complex relationships in the data. Additionally, incorporating domain-specific features and conducting detailed exploratory data analysis will further improve model accuracy and efficiency.
+
+## Libraries Used
+
+Python 3.10.9  
+numpy=1.25.2  
+pandas=2.0.3  
+matplotlib=3.7.1  
+seaborn=0.13.1  
+tqdm=4.66.2  
+sklearn=1.2.2
